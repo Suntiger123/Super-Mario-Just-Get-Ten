@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import sys, pygame
 from bases import *
 from merge import *
@@ -62,6 +64,38 @@ def displayScore():
     surface.fill(White, (820, 100, 50, 50))
     surface.blit(gameScore, (820, 100, 50, 50))
     
+def imageNumber(myPicture):
+    for i in range(1,11,1):
+        if cells[i] == myPicture :
+            if i>1 :
+                return "," + i
+            else:
+                return i
+    return 0
+
+def choose():
+    fichier = input("Entrer le nom du fichier :")
+    if len(fichier)<3 :
+        fichier = "save.txt"
+
+def saveGrid():
+    fichier = choose()
+    sauvegarde = open(fichier, "w")
+    for col in range(mapSize):
+        for row in range(mapSize):
+            sauvegarde.write(imageNumber(gameboard[col][row]))
+    sauvegarde.close()
+    
+def replay():
+    fichier = choose()
+    sauvegarde = open(fichier, "r")
+    chaine = sauvegarde.read()
+    numberList = chaine.split(",")
+    for col in range(mapSize):
+        for row in range(mapSize):
+            surface.blit(cells[numberList[row*mapSize + col]], (yPos + row*cellSize, xPos + col*cellSize, cellSize, cellSize))
+    sauvegarde.close()
+    
 # Startup draw
 drawGrid()
 scoreTitle = font.render('CURRENT SCORE :', True, Black, None)
@@ -78,7 +112,15 @@ while 1:
     # Events loop
     for event in pygame.event.get():
         # Manage quit / closing window event
-        if event.type == pygame.QUIT: sys.exit()
+        if event.type == pygame.QUIT:
+            saveGrid()
+            sys.exit()
+        
+        if event.type == pygame.K_r:
+            replay()
+
+        elif event.type == pygame.K_s:
+            saveGrid()
 
         # Display mousePos on window title bar
         elif event.type == pygame.MOUSEMOTION:
