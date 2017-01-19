@@ -56,7 +56,8 @@ def drawGrid():
             # Prepare to display correct numeric image according gameBoard cell value in the correct position
             surface.blit(cells[gameBoard[col][row]], (yPos + row*cellSize, xPos + col*cellSize, cellSize, cellSize))
 
-def displayScore(maxScore):
+def displayScore():
+    maxScore = maxValue(mapSize, gameBoard)
     gameScore = font.render(maxScore, True, Black, None)
     surface.fill(White, (820, 100, 50, 50))
     surface.blit(gameScore, (820, 100, 50, 50))
@@ -72,8 +73,7 @@ while 1:
     mouseX = (pygame.mouse.get_pos()[1] - xPos) // cellSize
     mouseY = (pygame.mouse.get_pos()[0] - yPos) // cellSize
 
-    maxScore = maxValue(mapSize, gameBoard)
-    displayScore(maxScore)
+    displayScore()
 
     # Events loop
     for event in pygame.event.get():
