@@ -38,5 +38,5 @@ def maxValue(n, myList):
         for i in range(n):
             if myList[i][j] > maxValue:
                 maxValue = myList[i][j]
-    return maxValue
+    return str(maxValue)
 

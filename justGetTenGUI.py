@@ -2,6 +2,7 @@ import sys, pygame
 from bases import *
 from merge import *
 from possible import *
+from pygame.locals import *
 
 pygame.init()
 
@@ -14,9 +15,13 @@ proba=(0.05,0.30,0.6)
 firstSelection = False
 size = width, height = 1088, 607
 gameBoard = gameBoard(mapSize, proba)
-display(gameBoard)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Super Mario Get Ten")
+font = pygame.font.Font('fonts/impress-bt-42347.ttf', 20)
+
+# Colors
+Black = (0, 0, 0)
+White = (255, 255, 255)
 
 # Images loading
 surface = pygame.image.load("images/surface-5x5.png")
@@ -51,14 +56,24 @@ def drawGrid():
             # Prepare to display correct numeric image according gameBoard cell value in the correct position
             surface.blit(cells[gameBoard[col][row]], (yPos + row*cellSize, xPos + col*cellSize, cellSize, cellSize))
 
+def displayScore(maxScore):
+    gameScore = font.render(maxScore, True, Black, None)
+    surface.fill(White, (820, 100, 50, 50))
+    surface.blit(gameScore, (820, 100, 50, 50))
+    
 # Startup draw
 drawGrid()
+scoreTitle = font.render('CURRENT SCORE :', True, Black, None)
+surface.blit(scoreTitle, (650, 100, 50, 50))
 
 # Main Loop
 while 1:
     # Calculate mousePos based on gameBoard grid
     mouseX = (pygame.mouse.get_pos()[1] - xPos) // cellSize
     mouseY = (pygame.mouse.get_pos()[0] - yPos) // cellSize
+
+    maxScore = maxValue(mapSize, gameBoard)
+    displayScore(maxScore)
 
     # Events loop
     for event in pygame.event.get():
