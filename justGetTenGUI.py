@@ -63,7 +63,9 @@ while 1:
     # Events loop
     for event in pygame.event.get():
         # Manage quit / closing window event
-        if event.type == pygame.QUIT: sys.exit()
+        if event.type == pygame.QUIT: 
+            pygame.quit()
+            sys.exit()
 
         # Display mousePos on window title bar
         elif event.type == pygame.MOUSEMOTION:
