@@ -8,12 +8,13 @@ pygame.init()
 # Init vars
 mapSize = 5
 cellSize = 32
-xPos = 288
-yPos = 265
+xPos = 289
+yPos = 231
 proba=(0.05,0.30,0.6)
 firstSelection = False
 size = width, height = 1088, 607
 gameBoard = gameBoard(mapSize, proba)
+display(gameBoard)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Super Mario Get Ten")
 
